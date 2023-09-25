@@ -17,11 +17,22 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+
+.navBar {
+  background-color: black;
+}
+
+/* parent must be position: relative */
+.fix-center {
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.test {
+  height: 150px;
+}
+
