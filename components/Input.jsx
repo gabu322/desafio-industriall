@@ -1,96 +1,64 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Input({ type, label, initialValue, onChange, name, options, disabled}) {
+export default function Input({ type, label, initialValue, onChange, name, options, disabled }) {
     const [value, setValue] = useState(initialValue);
-    const [isFocused, setIsFocused] = useState(
-        (options || type === "date" || type === "datetime-local")
-            ? true
-            : false
-    );
-
-
     useEffect(() => {
         setValue(initialValue);
     }, [initialValue]);
 
 
-    if(type == "datetime") {
+    let correctLable = (type == "datetime-local" || options > 0) ? true : false;
+
+    const [isFocused, setIsFocused] = useState(false);
+
+    if (type == "datetime") {
         type = "datetime-local";
     }
 
     const handleInputChange = (e) => {
-        const newValue = e.target.value;
-        setValue(newValue);
-        onChange({ target: { name, value: newValue } });
+        setValue(e.target.value);
+        onChange({ target: { name, value: e.target.value } });
     };
 
-    const handleBlur = () => {
-        setIsFocused(false);
+    const commonAttributes = {
+        type: type || "text",
+        name: name,
+        value: value || '',
+        onChange: handleInputChange,
+        onFocus: () => setIsFocused(true),
+        onBlur: () => setIsFocused(false),
+        className: "w-full p-2 border rounded transition " + (isFocused ? "border-blue-500" : "border-gray-300"),
+        disabled: disabled,
     };
 
-    if (type == "textarea") {
-        // Render as a textarea
-        return (
-            <div className="relative w-full component" name={value} >
-                <textarea
-                    value={value ?? ''}
-                    name={name}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleBlur}
-                    className={"w-full p-2 border rounded transition " + (isFocused ? "border-blue-500" : "border-gray-300")}
-                    disabled={disabled}
-                />
-                <label className={`absolute left-2 transition-all ${isFocused || value ? '-top-2 text-xs bg-white px-1' : 'top-2 text-base bg-transparent'}`}>
-                    {label}
-                </label>
-            </div>
-        );
-    } else if (options && options.length > 0) {
-        // Render as an input with a dropdown
-        return (
-            <div className="relative w-full component" name={value}>
-                <select
-                    name={name}
-                    value={value ?? ''}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleBlur}
-                    className={"w-full p-2 border rounded transition " + (isFocused ? "border-blue-500" : "border-gray-300")}
-                    disabled={disabled}
-                >
-                    <option key="padrao" value="" disabled>
-                        Selecione uma opção
-                    </option>
-                    {options.map((option) => (
-                        <option key={option.id} value={option.id}>
-                            {option.name}
-                        </option>
-                    ))}
-                </select>
-                <label className={`absolute left-2 transition-all bg-white ${isFocused || value ? '-top-2 text-xs  px-1' : 'top-2 text-base w-24'}`}>
-                    {label}
-                </label>
-            </div>
-        );
+
+    let input;
+    if (options && options.length > 0) {
+        input = (<select {...commonAttributes}>
+            <option key="padrao" value="" disabled>
+                Selecione uma opção
+            </option>
+            {options.map((option) => (
+                <option key={option.id} value={option.id}>
+                    {option.name}
+                </option>
+            ))}
+        </select>);
+        correctLable = true;
+    } else if (type == "textarea") {
+        input = (<textarea {...commonAttributes} />);
     } else {
-        // Render as a regular input
-        return (
-            <div className="relative w-full component" name={value}>
-                <input
-                    type={type ?? "text"}
-                    value={value ?? ''}
-                    name={name}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={handleBlur}
-                    className={"w-full p-2 border rounded transition " + (isFocused ? "border-blue-500" : "border-gray-300")}
-                    disabled={disabled}
-                />
-                <label className={`absolute left-2 transition-all bg-white ${isFocused || value ? '-top-2 text-xs  px-1' : 'top-2 text-base'}`} style={{zIndex: 1}}>
-                    {label}
-                </label>
-            </div>
-        );
+        input = (<input {...commonAttributes} />);
     }
+
+
+    return (
+        <div className="relative w-full component" name={value}>
+            {input}
+            <label className={`absolute left-2 transition-all bg-white ${(isFocused || value || correctLable) ? '-top-2 text-xs  px-1' : 'top-2 text-base'}`} style={{ zIndex: 1 }}>
+                {label}
+            </label>
+        </div>
+    );
+
 }

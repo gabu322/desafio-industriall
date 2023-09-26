@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Button({ children, href, type, onClick, width, color }) {
+export default function Button({ children, href, type, onClick, width, height, color}) {
 
     if (color == "red") {
         color = " bg-red-500 hover:bg-red-600";
@@ -18,16 +18,13 @@ export default function Button({ children, href, type, onClick, width, color }) 
         <button type={type ?? "button"}
             className={"px-3 py-2 rounded text-white drop-shadow transition-all duration-200 cursor-pointer font-semibold text-sm my-auto" + color}
             style={{
-                width: width ?? "fit-content"
+                width: width ?? "fit-content",
+                height: height ?? "fit-content"
             }}
             onClick={onClick}
         >
             {children}
-            {href ? (
-                <Link href={href} className='top-0 left-0 absolute w-full h-full' />
-            ) : (
-                ""
-            )}
+            {href && ( <Link href={href} className='top-0 left-0 absolute w-full h-full' />)}
         </button>
     );
 }

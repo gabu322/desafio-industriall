@@ -19,24 +19,9 @@ export default function InfosAta({ params }) {
                     Authorization: "Bearer " + session?.infos?.token
                 }
             }).then(res => {
-                console.log(res.data)
                 setAta(res.data);
             });
     }, [session])
-
-    // const [camposAdicionais, setCamposAdicionais] = useState([]);
-    // useEffect(() => {
-    //     if(!session?.infos.token) return;
-    //     if (ata.tipoReuniaoId == "") return;
-    //     ata.camposAtaReuniao = [];
-    //     axios.get("https://desafio-iall.azurewebsites.net/api/TiposReuniao/" + ata?.tipoReuniaoId, {
-    //         headers: {
-    //             Authorization: "Bearer " + session?.infos?.token
-    //         }
-    //     }).then(res => {
-    //         setCamposAdicionais(res.data.campos);
-    //     });
-    // }, [ata.tipoReuniaoId])
 
     return (<>
         <div className='flex justify-between w-3/5 m-auto p-4 items-center flex-wrap'>

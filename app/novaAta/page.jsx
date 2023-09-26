@@ -42,7 +42,6 @@ export default function NovaAta() {
             ...formValues,
             camposAtaReuniao: updatedCampos,
         });
-        console.log(formValues.camposAtaReuniao);
     };
 
 
@@ -71,7 +70,6 @@ export default function NovaAta() {
                 },
             })
             .then((res) => {
-                console.log(res.data);
                 router.push('/'); // Navigate back to the main page
             })
             .catch((err) => {
@@ -124,7 +122,6 @@ export default function NovaAta() {
             }
         }).then(res => {
             setCamposAdicionais(res.data.campos);
-            console.log(res.data.campos);
         });
     }, [formValues.tipoReuniaoId])
 
