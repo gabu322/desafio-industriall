@@ -22,6 +22,7 @@ export default function NovaAta() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        
         setFormValues({
             ...formValues,
             [name]: value,
@@ -71,6 +72,8 @@ export default function NovaAta() {
             })
             .then((res) => {
                 router.push('/'); // Navigate back to the main page
+                console.log(res);
+                console.log(formValues)
             })
             .catch((err) => {
                 console.log("Erro ao criar ata");
@@ -126,6 +129,7 @@ export default function NovaAta() {
     }, [formValues.tipoReuniaoId])
 
     return (<>
+
         <div className='flex justify-between w-3/5 m-auto p-4 items-center flex-wrap'>
             <div className='flex justify-between flex-col'>
                 <div style={{

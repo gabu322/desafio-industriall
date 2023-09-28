@@ -26,26 +26,26 @@ export default function InfosAta({ params }) {
     return (<>
         <div className='flex justify-between w-3/5 m-auto p-4 items-center flex-wrap'>
             <div className='flex justify-between flex-col'>
-                <div style={{
-                    color: "#003A64",
-                    fontSize: "24px",
-                    fontWeight: 700,
-                }}>Informações sobre a Ata nº {ata.id}:</div>
-
+                <div className='text-2xl font-bold' style={{ color: "#003A64" }}>Ata nº {ata.id}:</div>
+                <div className='text-xl' style={{ color: 'var(--gray-darkest, #5C5958)' }}>Listando informações sobre a ata:</div>
             </div>
-
-
         </div>
-        <div className="w-3/5 m-auto bg-white rounded drop-shadow-lg p-10 pt-8 flex flex-col gap-8"
-            style={{ zIndex: 0 }}>
+
+        <div className="w-3/5 m-auto bg-white rounded drop-shadow-lg p-10 pt-8 flex flex-col gap-8" style={{ zIndex: 0 }}>
             <div className="text-gray-500 text-lg font-bold">Identificação: </div>
+
             <Input label="Título" name="titulo" initialValue={ata.titulo} disabled />
+
             <Input label="Local" name="localId" initialValue={ata.local} disabled />
+
             <div className='flex flex-row gap-8 justify-between '>
                 <Input label={"Data e horário de início"} type="datetime-local" name="dataInicio" initialValue={ata.dataInicio} disabled />
+
                 <Input label={"Data e horário de fim"} type={"datetime-local"} name="dataFim" initialValue={ata.dataFim} disabled />
             </div>
+
             <Input label="Tipo de Reunião" name="tipoReuniaoId" initialValue={ata.tipoReuniao} disabled />
+
             {ata?.camposAtaReuniao?.map((campo) => (
                 <Input
                     key={campo.campoId}
@@ -57,7 +57,7 @@ export default function InfosAta({ params }) {
                 />
             ))}
 
-            <div className='flex flex-row gap-8 justify-end'>
+            <div className='flex justify-end'>
                 <Button color="gray" href="/">Voltar</Button>
             </div>
         </div>
